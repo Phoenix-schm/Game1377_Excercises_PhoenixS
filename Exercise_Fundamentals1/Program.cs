@@ -6,6 +6,7 @@
         {
             OutputStrings();
             Arithmetic();
+            Assignment();
         }
         static void OutputStrings()
         {
@@ -23,7 +24,7 @@
         static void Arithmetic()
         {
             // 2.
-            // Declare two integers and do math with them
+            // Declare two integers that take user input and do math with them
             Console.WriteLine("Input a number: ");
             int intInput1 = Convert.ToInt32(Console.ReadLine());
 
@@ -35,6 +36,27 @@
             Console.WriteLine(intInput1 * intInput2);                   // multiply
             Console.WriteLine((float)intInput1 / (float)intInput2);     // divide
             Console.WriteLine(intInput1 % intInput2);                   // modulo
+        }
+        static void Assignment()
+        {
+            // Declare two floats that take user input
+            float floatInput1;
+            float floatInput2;
+
+            Console.WriteLine("Input a float:");
+            floatInput1 = Convert.ToSingle(Console.ReadLine());
+            
+            Console.WriteLine("Input a float:");
+            floatInput2 = Convert.ToSingle(Console.ReadLine());
+
+            floatInput2 = floatInput1 + floatInput2;                    // as seen
+            floatInput2 = floatInput1 - floatInput2;
+            floatInput2 = floatInput1 * floatInput2;
+            floatInput2 = floatInput1 / floatInput2;
+        }
+        static void ComparisonAndConditionals()
+        {
+
         }
     }
 }
