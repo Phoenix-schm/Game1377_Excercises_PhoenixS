@@ -65,7 +65,7 @@ namespace Exercise_Fundamentals2
                 }
                 Console.WriteLine("\n");
             }
-            #endregion
+#endregion
 #region Part 2
             // 2b
             // outputs array in reverse order
@@ -273,9 +273,9 @@ namespace Exercise_Fundamentals2
             NewLine();
         }
 
-        #endregion
+#endregion
 
-        #region Misc
+#region Misc
         static int InputCheck(string userPrompt, bool cantBeZero, bool cantBeLess, int lessComparison)
         {
             int userInput = 0;                                      // cannot start at null due to TryParse
