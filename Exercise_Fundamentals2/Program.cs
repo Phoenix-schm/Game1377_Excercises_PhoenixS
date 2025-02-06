@@ -17,11 +17,12 @@ namespace Exercise_Fundamentals2
             float[] floatArray = { 0.123f, 0.20394f, 9.234f, 90.234f };
             double[] doubleArray = { 324.23421d, 943.4324223d, 98.484823d };
 
-            string sentence = "";                   // String sentence must contain an empty string, not null,
-            string? stringUserInput;
+            string sentence = "";                   // String sentence must contain an empty string, not null, due to error when adding to itself
 
+            string? stringUserInput;
             int intUserInput;
-            int average = 0;
+
+            int average = 0;                        // must be zero due to errors when adding to itself
 
             bool whileBool = true;
             bool switchReturn = true;
@@ -39,9 +40,8 @@ namespace Exercise_Fundamentals2
                 //         Switch statment for processing key presses
                 Console.WriteLine("Input a WASD key");
 
-                string? userInput;
-                userInput = Console.ReadLine();
-                switch (userInput)
+                stringUserInput = Console.ReadLine();
+                switch (stringUserInput)
                 {
                     case W:
                         Console.WriteLine("You moved up");
@@ -85,12 +85,11 @@ namespace Exercise_Fundamentals2
             }
             // once for loop has finished, show sentence in console.
             Console.WriteLine(sentence);
-            sentence = "";                          //reset sentence
 
             // 2c
             // checks if the user has typed one of the numbers in array      
             intUserInput = 0;
-            Console.WriteLine("Write one of the numbers in the array");
+            Console.WriteLine("Write one of the numbers in the array.");
             while (whileBool)
             {
                 stringUserInput = Console.ReadLine();                   // Take user input
@@ -102,14 +101,14 @@ namespace Exercise_Fundamentals2
                     // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i'
                     if (intUserInput == i || stringUserInput == "-783")
                     {
-                        Console.WriteLine("Hurray! You typed one of the numbers");
+                        Console.WriteLine("Hurray! You typed one of the numbers.");
                         whileBool = false;                             // boolean becomes false, breaks while loop
                         break;
                     }
                 }
                 if (whileBool == true)                                  // must be contained within if statement, will display otherwise
                 {
-                    Console.WriteLine("Try again");
+                    Console.WriteLine("Try again.");
                 }
             }
             NewLine();
@@ -121,7 +120,7 @@ namespace Exercise_Fundamentals2
                 average += intArray[i];
             }
             average /= intArray.Length;
-            Console.WriteLine("The average of this array is " + average.ToString() + "\n");
+            Console.WriteLine("The average of this array is " + average.ToString() + ". \n");
 
             //2e
             // skip every other number in array
@@ -162,8 +161,6 @@ namespace Exercise_Fundamentals2
             }
             NewLine();
 
-
-
             #endregion
 
             ArrayOrder(intArray, "");            // String parameter must contain an empty string, not null,
@@ -177,7 +174,7 @@ namespace Exercise_Fundamentals2
         }
 
 #region Assignment Part 3
-        static void ArrayOrder(int[] array, string sentence)
+        static void ArrayOrder(int[] array, string newString)
         {
             // 3a     Modified from 2b
 
@@ -188,16 +185,16 @@ namespace Exercise_Fundamentals2
                 {
                     // if 'i' is the first number in the index, then don't begin with a comma
                     // must have "" due to array being an int, won't consider it a string otherwise
-                    sentence = "" + array[i];
+                    newString = "" + array[i];
                 }
                 else
                 {
                     // else, start adding comma, add i to string for every loop
-                    sentence = sentence + ", " + array[i];
+                    newString = newString + ", " + array[i];
                 }
             }
             // once for loop has finished, show sentence in console.
-            Console.WriteLine(sentence);
+            Console.WriteLine(newString);
             NewLine();
 
         }
@@ -232,7 +229,7 @@ namespace Exercise_Fundamentals2
             {
                 average += array[i];
             }
-            Console.WriteLine("The average of an int array is " + (average / array.Length));
+            Console.WriteLine("The average of an int array is " + (average / array.Length) + ".");
             NewLine();
         }
         static float OverloadAverage(float[] array)
@@ -244,7 +241,7 @@ namespace Exercise_Fundamentals2
             {
                 average += array[i];
             }
-            Console.WriteLine("The average of a float array is " + (average / array.Length));
+            Console.WriteLine("The average of a float array is " + (average / array.Length) + ".");
             NewLine();
             return average;
         }
@@ -256,7 +253,7 @@ namespace Exercise_Fundamentals2
             {
                 average += array[i];
             }
-            Console.WriteLine("The average of a double array is " + (average / array.Length));
+            Console.WriteLine("The average of a double array is " + (average / array.Length) + ".");
             NewLine();
             return average;
         }
@@ -284,7 +281,6 @@ namespace Exercise_Fundamentals2
             int userInput = 0;                                      // cannot start at null due to TryParse
             string? stringUserInput;
 
-
             while(true)
             {
                 Console.WriteLine(userPrompt);                      // Prompt the user
@@ -296,7 +292,7 @@ namespace Exercise_Fundamentals2
 
                 if (stringUserInput == null || stringUserInput == "")
                 {
-                    Console.WriteLine("Cannot input nothing. Try again");
+                    Console.WriteLine("Cannot input nothing. Try again.");
                 }
                 else if (cantBeZero == true && userInput == 0)       // in the event that the player is not allowed to input zero
                 {
@@ -304,7 +300,7 @@ namespace Exercise_Fundamentals2
                 }
                 else if (cantBeLess == true && userInput < lessComparison)      // additional parameters, insures rangeMax cannot be less than rangeMin
                 {
-                    Console.WriteLine("Input cannot be less than " + lessComparison + ". Try again");
+                    Console.WriteLine("Input cannot be less than " + lessComparison + ". Try again.");
                 }
                 else if (stringCheck)
                 {
