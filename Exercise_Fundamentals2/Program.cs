@@ -6,7 +6,7 @@ namespace Exercise_Fundamentals2
     {
         static void Main(string[] args)
         {
-            SwitchStatement();
+            //SwitchStatement();
             ArraysAndLoops();
         }
 
@@ -62,10 +62,13 @@ namespace Exercise_Fundamentals2
             // variable declaration
             int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
 
-            ReverseArrayOrder("", intArray);          // String parameter must contain an empty string, not null,
-                                                      //        due to errors when equaling itself
-            UserInputCheck(true, intArray);
-            ArrayAverage(0, intArray);
+            //ReverseArrayOrder("", intArray);            // String parameter must contain an empty string, not null,
+            //        due to errors when equaling itself
+            UserInputCheckInArray(true, intArray);
+            //ArrayAverage(0, intArray);                  // int parameter must be 0 due to errors when equaling itself
+            //SkipANumber(intArray, 2);
+            //SkipANumber(intArray, 3);
+            ArrayCreation();
 
         }
 
@@ -87,56 +90,125 @@ namespace Exercise_Fundamentals2
                     sentence = sentence + ", " + array[i];
                 }
             }
-            // once for loop has finished, show StringModifier in console.
+            // once for loop has finished, show sentence in console.
             Console.WriteLine(sentence);
         }
 
-        static void UserInputCheck(bool boolean, int[] array)
+        static void UserInputCheckInArray(bool boolean, int[] array)
         {
             // 2c
-            // checks if the user has typed one of the numbers in array
+            // checks if the user has typed one of the numbers in array      
+            int intUserInput;
 
-            //variable declarations
-            string? stringUserInput;                                    // allows for null strings
-            int intUserInput;        
-            
-            Console.WriteLine("Write one of the list numbers:");
             while (boolean)
             {
-                //variable initialization in while loop, resets every loop
-                stringUserInput = Console.ReadLine();                   // Take user input
-                int.TryParse(stringUserInput, out intUserInput);        // Parses stringUserInput for integers and stores it in intUserInput,
-                                                                        //        TryParse() allows for null strings
+                intUserInput = InputCheck("Write one of the listed numbers:", false);
 
-                // if the user input is NOT a null
-                if (stringUserInput != null)
-                {
-                    foreach (int i in array)
+                foreach (int i in array)
                     {
-                        // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i'
-                        if (intUserInput == i)
-                        {
-                            Console.WriteLine("Hurray! You typed one of the numbers");
-                            boolean = false;                             // boolean becomes false, breaks while loop
-                        }
+                    // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i'
+                    if (intUserInput == i)
+                    {
+                        Console.WriteLine("Hurray! You typed one of the numbers");
+                        boolean = false;                             // boolean becomes false, breaks while loop
                     }
                 }
-                // tells user to try again if boolean still true
-                // must be stored in if statement otherwise will state "Try Again" regardless of new boolean
                 if (boolean == true)
                 {
-                    Console.WriteLine("You didn't type one of the numbers from the array. Try again");
+                    Console.WriteLine("Try again");
                 }
             }
         }
         static void ArrayAverage(int average, int[] array)
         {
+            // 2d
+            // add numbers in array and divide by array length to create its average
             for (int i = 0; i < array.Length; i++)
             {
-                average = average + array[i];
+                average += array[i];
             }
-            average = average / array.Length;
-            Console.WriteLine(average.ToString());
+            average /= array.Length;
+            Console.WriteLine(average.ToString() + "\n");
+        }
+        static void SkipANumber(int[] array, int x)
+        {
+            // 2e and 2f
+            for (int i = 0; i < array.Length; i++)
+            {
+                int comparison = i % x;
+
+                // output every other number in array
+                if (x == 2)
+                {
+                    if (comparison == 0)
+                    {
+                        continue;
+                    }
+                    Console.WriteLine(array[i]);
+                }
+
+                // output every third number in array
+                else if (x == 3)
+                {
+                    if (comparison == 0 || comparison == 1)
+                    {
+                        continue;
+                    }
+                    Console.WriteLine(array[i]);
+                }
+            }
+            Console.WriteLine("\n");
+        }
+        static void ArrayCreation()
+        {
+            int arraySize;
+            int rangeMin;
+            int rangeMax;
+
+            arraySize = InputCheck("Input an array size:", true);       // arraySize input, cannot be zero
+            rangeMin = InputCheck("Input minimum range size", false);   // minimum range input, could technically be zero
+            rangeMax = InputCheck("Input a maximum range size", false);
+
+            int[] newArray = new int[arraySize];
+            for (int i = 0; i < arraySize; i++)
+            {
+                //newArray[i] = 
+            }
+
+        }
+        static int InputCheck(string userPrompt, bool cantBeZero)
+        {
+            int userInput = 0;                                      // cannot start at null due to TryParse
+            string? stringUserInput;
+
+
+            while(true)
+            {
+                Console.WriteLine(userPrompt);                      // Prompt the user
+                stringUserInput = Console.ReadLine();               // Take user input
+                Console.WriteLine("\n");
+                int.TryParse(stringUserInput, out userInput);       // Parses stringUserInput for integers and stores it in 'integer',
+                                                                    //        TryParse() allows for null strings
+                
+                bool stringCheck = stringUserInput.All(char.IsDigit); // returns true if stringUserInput contains a number
+
+                if (stringUserInput == null || stringUserInput == "")
+                {
+                    Console.WriteLine("Cannot input nothing. Try again");
+                }
+                else if (cantBeZero == true && userInput == 0)       // in the event that the player is not allowed to input zero
+                {
+                    Console.WriteLine("Cannot input zero. Try again.");
+                }
+                else if (stringCheck)
+                {
+                    return userInput;
+                }
+                else
+                {
+                    Console.WriteLine("Try again.");
+                }
+            }            
         }
     }
 }
