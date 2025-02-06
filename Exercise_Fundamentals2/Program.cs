@@ -1,4 +1,6 @@
-﻿namespace Exercise_Fundamentals2
+﻿using System.Collections;
+
+namespace Exercise_Fundamentals2
 {
     internal class Program
     {
@@ -46,37 +48,81 @@
                         switchReturn = false;
                         break;
                     default:
-                        Console.WriteLine("Try again \n");
+                        Console.WriteLine("Try again");
                         break;
                     }
+                Console.WriteLine("\n");
             }
              
         }
         static void ArraysAndLoops()
         {
-            // Part 2b
+            // Part 2
 
             // variable declaration
-            string stringModifier = "";         // String must contain an empty string, not null, due to errors when equaling itself
             int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
 
-            // output array in reverse order
-            for (int i = intArray.Length - 1; i >= 0; i--)
+            ReverseArrayOrder("", intArray);        // String parameter must contain an empty string, not null, due to errors when equaling itself
+            UserInputCheck(true, intArray);
+        }
+
+        static void ReverseArrayOrder(string sentence, int[] array)
+        {
+            // 2b
+            // outputs array in reverse order
+            for (int i = array.Length - 1; i >= 0; i--)
             {
-                if (i == intArray.Length - 1)
+                if (i == array.Length - 1)
                 {
-                    // if i is the first number in the index, then don't begin with a comma
-                    // must have "" due to intArray being an int, won't consider it a string otherwise
-                    stringModifier = "" + intArray[i];
+                    // if 'i' is the first number in the index, then don't begin with a comma
+                    // must have "" due to array being an int, won't consider it a string otherwise
+                    sentence = "" + array[i];
                 }
                 else
                 {
-                   // else, start adding comma, add i to string for every loop
-                    stringModifier = stringModifier + ", " + intArray[i];
+                    // else, start adding comma, add i to string for every loop
+                    sentence = sentence + ", " + array[i];
                 }
             }
             // once for loop has finished, show StringModifier in console.
-            Console.WriteLine(stringModifier);
+            Console.WriteLine(sentence);
+        }
+
+        static void UserInputCheck(bool boolean, int[] array)
+        {
+            // 2c
+            // checks if the user has typed one of the numbers in array
+
+            Console.WriteLine("Write one of the list numbers:");
+            while (boolean)
+            {
+                // variable declaration in while loop so that it resets every loop
+                string? stringUserInput;                    // allows for null strings
+                stringUserInput = Console.ReadLine();       // take user input
+                int intUserInput;                           
+
+                int.TryParse(stringUserInput, out intUserInput);    // parses stringUserInput for integers and stores it in intUserInput, TryParse() allows for null strings
+
+                // if the user input is NOT a null
+                if (stringUserInput != null)
+                {
+                    foreach (int i in array)
+                    {
+                        // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i'
+                        if (intUserInput == i)
+                        {
+                            Console.WriteLine("Hurray! You typed one of the numbers");
+                            boolean = false;                                            // boolean becomes false, breaks while loop
+                        }
+                    }
+                }
+                // tells user to try again if boolean still true
+                // must be stored in if statement otherwise will state "Try Again" regardless of new boolean
+                if (boolean == true)
+                {
+                    Console.WriteLine("You didn't type one of the numbers from the array. Try again");
+                }
+            }
         }
     }
 }
