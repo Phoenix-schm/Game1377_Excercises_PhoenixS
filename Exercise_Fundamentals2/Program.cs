@@ -62,8 +62,11 @@ namespace Exercise_Fundamentals2
             // variable declaration
             int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
 
-            ReverseArrayOrder("", intArray);        // String parameter must contain an empty string, not null, due to errors when equaling itself
+            ReverseArrayOrder("", intArray);          // String parameter must contain an empty string, not null,
+                                                      //        due to errors when equaling itself
             UserInputCheck(true, intArray);
+            ArrayAverage(0, intArray);
+
         }
 
         static void ReverseArrayOrder(string sentence, int[] array)
@@ -93,15 +96,17 @@ namespace Exercise_Fundamentals2
             // 2c
             // checks if the user has typed one of the numbers in array
 
+            //variable declarations
+            string? stringUserInput;                                    // allows for null strings
+            int intUserInput;        
+            
             Console.WriteLine("Write one of the list numbers:");
             while (boolean)
             {
-                // variable declaration in while loop so that it resets every loop
-                string? stringUserInput;                    // allows for null strings
-                stringUserInput = Console.ReadLine();       // take user input
-                int intUserInput;                           
-
-                int.TryParse(stringUserInput, out intUserInput);    // parses stringUserInput for integers and stores it in intUserInput, TryParse() allows for null strings
+                //variable initialization in while loop, resets every loop
+                stringUserInput = Console.ReadLine();                   // Take user input
+                int.TryParse(stringUserInput, out intUserInput);        // Parses stringUserInput for integers and stores it in intUserInput,
+                                                                        //        TryParse() allows for null strings
 
                 // if the user input is NOT a null
                 if (stringUserInput != null)
@@ -112,7 +117,7 @@ namespace Exercise_Fundamentals2
                         if (intUserInput == i)
                         {
                             Console.WriteLine("Hurray! You typed one of the numbers");
-                            boolean = false;                                            // boolean becomes false, breaks while loop
+                            boolean = false;                             // boolean becomes false, breaks while loop
                         }
                     }
                 }
@@ -123,6 +128,15 @@ namespace Exercise_Fundamentals2
                     Console.WriteLine("You didn't type one of the numbers from the array. Try again");
                 }
             }
+        }
+        static void ArrayAverage(int average, int[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+            {
+                average = average + array[i];
+            }
+            average = average / array.Length;
+            Console.WriteLine(average.ToString());
         }
     }
 }
