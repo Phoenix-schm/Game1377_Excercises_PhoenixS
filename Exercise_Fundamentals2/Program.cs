@@ -6,12 +6,6 @@ namespace Exercise_Fundamentals2
     {
         static void Main(string[] args)
         {
-            //SwitchStatement();
-            ArraysAndLoops();
-        }
-
-        static void SwitchStatement()
-        {
             // variable declarations
             // Const strings for possible future changes
             const string W = "w";
@@ -19,8 +13,26 @@ namespace Exercise_Fundamentals2
             const string S = "s";
             const string D = "d";
 
+            int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
+            float[] floatArray = { 0.123f, 0.20394f, 9.234f, 90.234f };
+            double[] doubleArray = { 324.23421d, 943.4324223d, 98.484823d };
+
+            string sentence = "";                   // String sentence must contain an empty string, not null,
+            string? stringUserInput;
+
+            int intUserInput;
+            int average = 0;
+
+            bool whileBool = true;
             bool switchReturn = true;
 
+            int arraySize;
+            int rangeMax;
+            int rangeMin;
+            var rand = new Random();
+
+
+#region Part 1
             while (switchReturn)
             {
                 // Part 1: takes user input for only the WASD key presses
@@ -29,8 +41,8 @@ namespace Exercise_Fundamentals2
 
                 string? userInput;
                 userInput = Console.ReadLine();
-                switch(userInput)
-                    {
+                switch (userInput)
+                {
                     case W:
                         Console.WriteLine("You moved up");
                         switchReturn = false;
@@ -50,35 +62,129 @@ namespace Exercise_Fundamentals2
                     default:
                         Console.WriteLine("Try again");
                         break;
-                    }
+                }
                 Console.WriteLine("\n");
             }
-             
-        }
-        static void ArraysAndLoops()
-        {
-            // Part 2
-
-            // variable declaration
-            int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
-
-            //ReverseArrayOrder("", intArray);            // String parameter must contain an empty string, not null,
-            //        due to errors when equaling itself
-            UserInputCheckInArray(true, intArray);
-            //ArrayAverage(0, intArray);                  // int parameter must be 0 due to errors when equaling itself
-            //SkipANumber(intArray, 2);
-            //SkipANumber(intArray, 3);
-            ArrayCreation();
-
-        }
-
-        static void ReverseArrayOrder(string sentence, int[] array)
-        {
+            #endregion
+#region Part 2
             // 2b
             // outputs array in reverse order
-            for (int i = array.Length - 1; i >= 0; i--)
+            for (int i = intArray.Length - 1; i >= 0; i--)
             {
-                if (i == array.Length - 1)
+                if (i == intArray.Length - 1)
+                {
+                    // if 'i' is the first number in the index, then don't begin with a comma
+                    // must have "" due to array being an int, won't consider it a string otherwise
+                    sentence = "" + intArray[i];
+                }
+                else
+                {
+                    // else, start adding comma, add i to string for every loop
+                    sentence = sentence + ", " + intArray[i];
+                }
+            }
+            // once for loop has finished, show sentence in console.
+            Console.WriteLine(sentence);
+            sentence = "";                          //reset sentence
+
+            // 2c
+            // checks if the user has typed one of the numbers in array      
+            intUserInput = 0;
+            Console.WriteLine("Write one of the numbers in the array");
+            while (whileBool)
+            {
+                stringUserInput = Console.ReadLine();                   // Take user input
+                int.TryParse(stringUserInput, out intUserInput);        // Parses stringUserInput for integers and stores it in intUserInput,
+
+                
+                foreach (int i in intArray)
+                {
+                    // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i'
+                    if (intUserInput == i || stringUserInput == "-783")
+                    {
+                        Console.WriteLine("Hurray! You typed one of the numbers");
+                        whileBool = false;                             // boolean becomes false, breaks while loop
+                        break;
+                    }
+                }
+                if (whileBool == true)                                  // must be contained within if statement, will display otherwise
+                {
+                    Console.WriteLine("Try again");
+                }
+            }
+            NewLine();
+
+            // 2d
+            // add numbers in array and divide by array length to create its average
+            for (int i = 0; i < intArray.Length; i++)
+            {
+                average += intArray[i];
+            }
+            average /= intArray.Length;
+            Console.WriteLine("The average of this array is " + average.ToString() + "\n");
+
+            //2e
+            // skip every other number in array
+            for (int i = 0; i < intArray.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    continue;
+                }
+                Console.WriteLine(intArray[i]);
+            }
+            NewLine();
+
+            // 2f
+            // skip every third number in array
+            for (int i = 0; i < intArray.Length; i++)
+            {
+                if (i % 3 == 0 || i % 3 == 1)
+                {
+                    continue;
+                }
+                Console.WriteLine(intArray[i]);
+            }
+            NewLine();
+
+            // 2g
+            // Take in user input to create a custom array. Each element of array should be random form arrayMin - arrayMax
+            arraySize = InputCheck("Input an array size:", true, false, 0);             // arraySize input, cannot be zero
+            rangeMin = InputCheck("Input a minimum size for array:", false, false, 0);   // minimum range input, could technically be zero
+            rangeMax = InputCheck("Input a maximum size for the array:", false, true, rangeMin);
+
+            int[] customArray = new int[arraySize];                        // create an array with index size of arraySize
+
+            foreach (int i in customArray)                                 // fills the new array with a random number for each index
+            {
+                customArray[i] = rand.Next(rangeMin, rangeMax);
+                Console.WriteLine(customArray[i]);
+            }
+            NewLine();
+
+
+
+            #endregion
+
+            ArrayOrder(intArray, "");            // String parameter must contain an empty string, not null,
+            OverloadArrayOrder(floatArray);
+            OverloadArrayOrder(doubleArray);
+            IntToFloatAverage(intArray);
+            OverloadAverage(floatArray);
+            OverloadAverage(doubleArray);
+
+            ArrayCreation(arraySize, rangeMin, rangeMax, rand);
+        }
+
+#region Assignment Part 3
+        static void ArrayOrder(int[] array, string sentence)
+        {
+            // 3a     Modified from 2b
+
+            // outputs array in order from left to right
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (i == 0)
                 {
                     // if 'i' is the first number in the index, then don't begin with a comma
                     // must have "" due to array being an int, won't consider it a string otherwise
@@ -92,91 +198,88 @@ namespace Exercise_Fundamentals2
             }
             // once for loop has finished, show sentence in console.
             Console.WriteLine(sentence);
+            NewLine();
+
         }
-
-        static void UserInputCheckInArray(bool boolean, int[] array)
+        static float[] OverloadArrayOrder(float[] array)
         {
-            // 2c
-            // checks if the user has typed one of the numbers in array      
-            int intUserInput;
-
-            while (boolean)
+            // 3b
+            // an overloaded method that can output all elements in a float array
+            for (int i = 0; i < array.Length;i++)
             {
-                intUserInput = InputCheck("Write one of the listed numbers:", false);
-
-                foreach (int i in array)
-                    {
-                    // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i'
-                    if (intUserInput == i)
-                    {
-                        Console.WriteLine("Hurray! You typed one of the numbers");
-                        boolean = false;                             // boolean becomes false, breaks while loop
-                    }
-                }
-                if (boolean == true)
-                {
-                    Console.WriteLine("Try again");
-                }
+                Console.WriteLine(array[i]);
             }
+            NewLine();
+            return array;
         }
-        static void ArrayAverage(int average, int[] array)
+        static double[] OverloadArrayOrder(double[] array)
         {
-            // 2d
-            // add numbers in array and divide by array length to create its average
+            // 3b
+            // an overloaded method that can output all elements in a double array
+            for (int i = 0; i < array.Length; i++)
+            {
+                Console.WriteLine(array[i]);
+            }
+            NewLine();
+            return array;
+        }
+        static void IntToFloatAverage(int[] array)
+        {
+            // 3c
+            // outputs the average of an int array as a float
+            float average = 0;
+            for(int i = 0;i < array.Length; i++)
+            {
+                average += array[i];
+            }
+            Console.WriteLine("The average of an int array is " + (average / array.Length));
+            NewLine();
+        }
+        static float OverloadAverage(float[] array)
+        {
+            // 3d
+            // an overloaded method that outputs the average in a float array
+            float average = 0;
             for (int i = 0; i < array.Length; i++)
             {
                 average += array[i];
             }
-            average /= array.Length;
-            Console.WriteLine(average.ToString() + "\n");
+            Console.WriteLine("The average of a float array is " + (average / array.Length));
+            NewLine();
+            return average;
         }
-        static void SkipANumber(int[] array, int x)
+        static double OverloadAverage(double[] array)
         {
-            // 2e and 2f
+            // 3d an overloaded method that outputs the average in a double array
+            double average = 0;
             for (int i = 0; i < array.Length; i++)
             {
-                int comparison = i % x;
-
-                // output every other number in array
-                if (x == 2)
-                {
-                    if (comparison == 0)
-                    {
-                        continue;
-                    }
-                    Console.WriteLine(array[i]);
-                }
-
-                // output every third number in array
-                else if (x == 3)
-                {
-                    if (comparison == 0 || comparison == 1)
-                    {
-                        continue;
-                    }
-                    Console.WriteLine(array[i]);
-                }
+                average += array[i];
             }
-            Console.WriteLine("\n");
+            Console.WriteLine("The average of a double array is " + (average / array.Length));
+            NewLine();
+            return average;
         }
-        static void ArrayCreation()
+        static void ArrayCreation(int size, int min, int max, Random var)
         {
-            int arraySize;
-            int rangeMin;
-            int rangeMax;
+            size = InputCheck("Input an array size:", true, false, 0);       // arraySize input, cannot be zero
+            min = InputCheck("Input a minimum size for the array:", false, false, 0);   // minimum range input, could technically be zero
+            max = InputCheck("Input a maximum size for the array:", false, true, min);
 
-            arraySize = InputCheck("Input an array size:", true);       // arraySize input, cannot be zero
-            rangeMin = InputCheck("Input minimum range size", false);   // minimum range input, could technically be zero
-            rangeMax = InputCheck("Input a maximum range size", false);
+            int[] newArray = new int[size];                        // create an array with index size of arraySize 
 
-            int[] newArray = new int[arraySize];
-            for (int i = 0; i < arraySize; i++)
+            foreach (int i in newArray)                                 // fills the new array with a random number for each index
             {
-                //newArray[i] = 
+                newArray[i] = var.Next(min, max);
+                Console.WriteLine(newArray[i]);
             }
-
+            NewLine();
         }
-        static int InputCheck(string userPrompt, bool cantBeZero)
+
+        #endregion
+
+        #region Misc
+        static int InputCheck(string userPrompt, bool cantBeZero, bool cantBeLess, int lessComparison)
         {
             int userInput = 0;                                      // cannot start at null due to TryParse
             string? stringUserInput;
@@ -186,7 +289,6 @@ namespace Exercise_Fundamentals2
             {
                 Console.WriteLine(userPrompt);                      // Prompt the user
                 stringUserInput = Console.ReadLine();               // Take user input
-                Console.WriteLine("\n");
                 int.TryParse(stringUserInput, out userInput);       // Parses stringUserInput for integers and stores it in 'integer',
                                                                     //        TryParse() allows for null strings
                 
@@ -200,8 +302,13 @@ namespace Exercise_Fundamentals2
                 {
                     Console.WriteLine("Cannot input zero. Try again.");
                 }
+                else if (cantBeLess == true && userInput < lessComparison)      // additional parameters, insures rangeMax cannot be less than rangeMin
+                {
+                    Console.WriteLine("Input cannot be less than " + lessComparison + ". Try again");
+                }
                 else if (stringCheck)
                 {
+                    NewLine();
                     return userInput;
                 }
                 else
@@ -210,5 +317,10 @@ namespace Exercise_Fundamentals2
                 }
             }            
         }
+        static void NewLine()
+        {
+            Console.WriteLine("\n");
+        }
+#endregion
     }
 }
