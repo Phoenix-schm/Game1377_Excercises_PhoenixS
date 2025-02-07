@@ -7,20 +7,18 @@ namespace Exercise_Fundamentals2
         static void Main(string[] args)
         {
             // variable declarations
-            // Const strings for possible future changes
+            // Const strings for use in switch case
             const string W = "w";
             const string A = "a";
             const string S = "s";
             const string D = "d";
 
             int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
-            float[] floatArray = { 0.123f, 0.20394f, 9.234f, 90.234f };
-            double[] doubleArray = { 324.23421d, 943.4324223d, 98.484823d };
 
             string sentence = "";                   // String sentence must contain an empty string, not null, due to error when adding to itself
 
             string? stringUserInput;
-            int intUserInput;
+            int intUserInput = 0;
 
             int average = 0;                        // must be zero due to errors when adding to itself
 
@@ -61,10 +59,11 @@ namespace Exercise_Fundamentals2
                         break;
                     default:
                         Console.WriteLine("Try again");
+                        NewLine();
                         break;
                 }
-                Console.WriteLine("\n");
             }
+            NewLine();
 #endregion
 #region Part 2
             // 2b
@@ -88,7 +87,6 @@ namespace Exercise_Fundamentals2
 
             // 2c
             // checks if the user has typed one of the numbers in array      
-            intUserInput = 0;
             Console.WriteLine("Write one of the numbers in the array.");
             while (whileBool)
             {
@@ -98,15 +96,15 @@ namespace Exercise_Fundamentals2
                 
                 foreach (int i in intArray)
                 {
-                    // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i'
+                    // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i')
                     if (intUserInput == i || stringUserInput == "-783")
                     {
                         Console.WriteLine("Hurray! You typed one of the numbers.");
-                        whileBool = false;                             // boolean becomes false, breaks while loop
+                        whileBool = false;                             // boolean becomes false, break foreach loop
                         break;
                     }
                 }
-                if (whileBool == true)                                  // must be contained within if statement, will display otherwise
+                if (whileBool == true)                                 // must be contained within if statement, will display otherwise
                 {
                     Console.WriteLine("Try again.");
                 }
@@ -147,14 +145,15 @@ namespace Exercise_Fundamentals2
             NewLine();
 
             // 2g
-            // Take in user input to create a custom array. Each element of array should be random form arrayMin - arrayMax
+            // Take in user input to create a custom array. Each element of array is random number from arrayMin to arrayMax
             arraySize = InputCheck("Input an array size:", true, false, 0);             // arraySize input, cannot be zero
             rangeMin = InputCheck("Input a minimum size for array:", false, false, 0);   // minimum range input, could technically be zero
             rangeMax = InputCheck("Input a maximum size for the array:", false, true, rangeMin);
 
             int[] customArray = new int[arraySize];                        // create an array with index size of arraySize
 
-            foreach (int i in customArray)                                 // fills the new array with a random number for each index
+            // fill customArray with random numbers of custom range
+            for (int i = 0; i < customArray.Length; i++)
             {
                 customArray[i] = rand.Next(rangeMin, rangeMax);
                 Console.WriteLine(customArray[i]);
@@ -162,15 +161,6 @@ namespace Exercise_Fundamentals2
             NewLine();
 
             #endregion
-
-            ArrayOrder(intArray, "");            // String parameter must contain an empty string, not null,
-            OverloadArrayOrder(floatArray);
-            OverloadArrayOrder(doubleArray);
-            IntToFloatAverage(intArray);
-            OverloadAverage(floatArray);
-            OverloadAverage(doubleArray);
-
-            ArrayCreation(arraySize, rangeMin, rangeMax, rand);
         }
 
 #region Assignment Part 3
@@ -178,13 +168,12 @@ namespace Exercise_Fundamentals2
         {
             // 3a     Modified from 2b
 
-            // outputs array in order from left to right
+            // outputs array in order
             for (int i = 0; i < array.Length; i++)
             {
                 if (i == 0)
                 {
                     // if 'i' is the first number in the index, then don't begin with a comma
-                    // must have "" due to array being an int, won't consider it a string otherwise
                     newString = "" + array[i];
                 }
                 else
@@ -193,7 +182,6 @@ namespace Exercise_Fundamentals2
                     newString = newString + ", " + array[i];
                 }
             }
-            // once for loop has finished, show sentence in console.
             Console.WriteLine(newString);
             NewLine();
 
