@@ -100,7 +100,7 @@ namespace Exercise_Fundamentals2
                     if (intUserInput == i || stringUserInput == "-783")
                     {
                         Console.WriteLine("Hurray! You typed one of the numbers.");
-                        whileBool = false;                             // boolean becomes false, break foreach loop
+                        whileBool = false;
                         break;
                     }
                 }
@@ -118,7 +118,7 @@ namespace Exercise_Fundamentals2
                 average += intArray[i];
             }
             average /= intArray.Length;
-            Console.WriteLine("The average of this array is " + average.ToString() + ". \n");
+            Console.WriteLine("The average of this array is " + (float)average + ". \n");
 
             //2e
             // skip every other number in array
@@ -155,7 +155,7 @@ namespace Exercise_Fundamentals2
             // fill customArray with random numbers of custom range
             for (int i = 0; i < customArray.Length; i++)
             {
-                customArray[i] = rand.Next(rangeMin, rangeMax);
+                customArray[i] = rand.Next(rangeMin, rangeMax + 1);        // .Next() is exclusive of maxRange
                 Console.WriteLine(customArray[i]);
             }
             NewLine();
@@ -189,7 +189,7 @@ namespace Exercise_Fundamentals2
         static float[] OverloadArrayOrder(float[] array)
         {
             // 3b
-            // an overloaded method that can output all elements in a float array
+            // overloaded method that outputs all elements in a float array
             for (int i = 0; i < array.Length;i++)
             {
                 Console.WriteLine(array[i]);
@@ -200,7 +200,7 @@ namespace Exercise_Fundamentals2
         static double[] OverloadArrayOrder(double[] array)
         {
             // 3b
-            // an overloaded method that can output all elements in a double array
+            // overloaded method that outputs all elements in a double array
             for (int i = 0; i < array.Length; i++)
             {
                 Console.WriteLine(array[i]);
@@ -223,7 +223,7 @@ namespace Exercise_Fundamentals2
         static float OverloadAverage(float[] array)
         {
             // 3d
-            // an overloaded method that outputs the average in a float array
+            // overloaded method that outputs average in a float array
             float average = 0;
             for (int i = 0; i < array.Length; i++)
             {
@@ -235,7 +235,8 @@ namespace Exercise_Fundamentals2
         }
         static double OverloadAverage(double[] array)
         {
-            // 3d an overloaded method that outputs the average in a double array
+            // 3d
+            // overloaded method that outputs average in a double array
             double average = 0;
             for (int i = 0; i < array.Length; i++)
             {
@@ -255,7 +256,7 @@ namespace Exercise_Fundamentals2
 
             foreach (int i in newArray)                                 // fills the new array with a random number for each index
             {
-                newArray[i] = var.Next(min, max);
+                newArray[i] = var.Next(min, max + 1);
                 Console.WriteLine(newArray[i]);
             }
             NewLine();
