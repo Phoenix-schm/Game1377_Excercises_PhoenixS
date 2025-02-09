@@ -8,10 +8,10 @@ namespace Exercise_Fundamentals2
         {
             // variable declarations
             // Const strings for use in switch case
-            const string W = "w";
-            const string A = "a";
-            const string S = "s";
-            const string D = "d";
+            const string UP = "w";
+            const string LEFT = "a";
+            const string DOWN = "s";
+            const string RIGHT = "d";
 
             int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
 
@@ -39,26 +39,26 @@ namespace Exercise_Fundamentals2
                 Console.WriteLine("Input a WASD key");
 
                 stringUserInput = Console.ReadLine();
-                switch (stringUserInput)
+                switch (stringUserInput.ToLower())
                 {
-                    case W:
+                    case UP:
                         Console.WriteLine("You moved up");
                         switchReturn = false;
                         break;
-                    case A:
+                    case LEFT:
                         Console.WriteLine("You moved left");
                         switchReturn = false;
                         break;
-                    case S:
+                    case DOWN:
                         Console.WriteLine("You moved down");
                         switchReturn = false;
                         break;
-                    case D:
+                    case RIGHT:
                         Console.WriteLine("You moved right");
                         switchReturn = false;
                         break;
                     default:
-                        Console.WriteLine("Try again");
+                        Console.WriteLine("Invalid input. Try again");
                         NewLine();
                         break;
                 }
@@ -250,9 +250,9 @@ namespace Exercise_Fundamentals2
         {
             size = InputCheck("Input an array size:", true, false, 0);       // arraySize input, cannot be zero
             min = InputCheck("Input a minimum size for the array:", false, false, 0);   // minimum range input, could technically be zero
-            max = InputCheck("Input a maximum size for the array:", false, true, min);
+            max = InputCheck("Input a maximum size for the array:", false, true, min);  // max rangw input, cannot be smaller than min
 
-            int[] newArray = new int[size];                        // create an array with index size of arraySize 
+            int[] newArray = new int[size];                        // create an array with index size of 'size'
 
             foreach (int i in newArray)                                 // fills the new array with a random number for each index
             {
@@ -304,7 +304,7 @@ namespace Exercise_Fundamentals2
         }
         static void NewLine()
         {
-            Console.WriteLine("\n");
+            Console.WriteLine("");
         }
 #endregion
     }
