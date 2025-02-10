@@ -14,6 +14,8 @@ namespace Exercise_Fundamentals2
             const string RIGHT = "d";
 
             int[] intArray = { 100, 94, 159, -783, 132, 179, 47, 107, 135, 50 };
+            float[] floatArray = { 24.242f, 122.78975f, 9.49f, 1923.34232f};
+            double[] doubleArray = { 494.49302d, 48.39305830d, 98.39304820f, 453.4920493d};
 
             string sentence = "";                   // String sentence must contain an empty string, not null, due to error when adding to itself
 
@@ -93,7 +95,7 @@ namespace Exercise_Fundamentals2
                 stringUserInput = Console.ReadLine();                   // Take user input
                 int.TryParse(stringUserInput, out intUserInput);        // Parses stringUserInput for integers and stores it in intUserInput,
 
-                
+
                 foreach (int i in intArray)
                 {
                     // checks the entire array for if intUserInput is equal to 'i' (cannot be done with stringUserInput due to comparison with int 'i')
@@ -133,10 +135,10 @@ namespace Exercise_Fundamentals2
             NewLine();
 
             // 2f
-            // skip every third number in array
+            // skip to every third number in array
             for (int i = 0; i < intArray.Length; i++)
             {
-                if (i % 3 == 0 || i % 3 == 1)
+                if (i % 3 != 2)
                 {
                     continue;
                 }
@@ -159,8 +161,14 @@ namespace Exercise_Fundamentals2
                 Console.WriteLine(customArray[i]);
             }
             NewLine();
-
             #endregion
+            ArrayOrder(intArray, "");
+            OverloadArrayOrder(floatArray);
+            OverloadArrayOrder(doubleArray);
+            IntToFloatAverage(intArray);
+            OverloadAverage(floatArray);
+            OverloadAverage(doubleArray);
+            ArrayCreation();
         }
 
 #region Assignment Part 3
@@ -246,17 +254,18 @@ namespace Exercise_Fundamentals2
             NewLine();
             return average;
         }
-        static void ArrayCreation(int size, int min, int max, Random var)
+        static void ArrayCreation()
         {
-            size = InputCheck("Input an array size:", true, false, 0);       // arraySize input, cannot be zero
-            min = InputCheck("Input a minimum size for the array:", false, false, 0);   // minimum range input, could technically be zero
-            max = InputCheck("Input a maximum size for the array:", false, true, min);  // max rangw input, cannot be smaller than min
+            Random rand = new Random();
+            int size = InputCheck("Input an array size:", true, false, 0);       // arraySize input, cannot be zero
+            int min = InputCheck("Input a minimum size for the array:", false, false, 0);   // minimum range input, could technically be zero
+            int max = InputCheck("Input a maximum size for the array:", false, true, min);  // max rangw input, cannot be smaller than min
 
             int[] newArray = new int[size];                        // create an array with index size of 'size'
 
             foreach (int i in newArray)                                 // fills the new array with a random number for each index
             {
-                newArray[i] = var.Next(min, max + 1);
+                newArray[i] = rand.Next(min, max + 1);
                 Console.WriteLine(newArray[i]);
             }
             NewLine();
@@ -298,7 +307,7 @@ namespace Exercise_Fundamentals2
                 }
                 else
                 {
-                    Console.WriteLine("Try again.");
+                    Console.WriteLine("Invalid input. Try again.");
                 }
             }            
         }
